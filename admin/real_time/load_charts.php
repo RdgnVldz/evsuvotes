@@ -1,11 +1,11 @@
 <?php
-// Database connection and SQL query to fetch data
+
 $conn = new mysqli('localhost', 'root', '', 'evsuvotes');
+
 $sql = "SELECT * FROM positions ORDER BY priority ASC";
 $query = $conn->query($sql);
 
 function slugify($text) {
-    // Your slugify logic here (as described in a previous response)
     $text = preg_replace('~[^\pL\d]+~u', '-', $text);
     $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
     $text = preg_replace('~[^-\w]+~', '', $text);
@@ -20,19 +20,16 @@ function slugify($text) {
     return $text;
 }
 
-// Initialize an output variable
+
 $output = '';
 
 while ($row = $query->fetch_assoc()) {
-    // Fetch data for the current position
     $positionId = $row['id'];
     $positionDescription = $row['description'];
 
-    // Construct the data arrays for the chart
     $carray = array();
     $varray = array();
 
-    // Fetch candidate and vote data for the current position (modify this part)
     $candidatesSql = "SELECT * FROM candidates WHERE position_id = '$positionId'";
     $candidatesQuery = $conn->query($candidatesSql);
 
@@ -44,14 +41,11 @@ while ($row = $query->fetch_assoc()) {
         array_push($varray, $votesQuery->num_rows);
     }
 
-    // Sort the data arrays in descending order based on votes
     array_multisort($varray, SORT_DESC, $carray);
 
-    // Encode data arrays as JSON
     $carray = json_encode($carray);
     $varray = json_encode($varray);
 
-    // Append the chart HTML to the output variable
     $output .= "
         <div class='col-sm-6'>
             <div class='box box-solid'>
@@ -67,7 +61,6 @@ while ($row = $query->fetch_assoc()) {
         </div>
     ";
 
-    // Chart generation code for each position
     $output .= "
         <script>
             $(function () {
@@ -90,6 +83,7 @@ while ($row = $query->fetch_assoc()) {
                     ]
                 };
                 var barChartOptions = {
+                    animation: false,
                     // ... (your existing options)
                 };
 
@@ -99,7 +93,6 @@ while ($row = $query->fetch_assoc()) {
     ";
 }
 
-// Send the generated HTML back to the front-end
 echo $output;
 
 $conn->close();
