@@ -148,11 +148,11 @@
                                         <td>" . $row['date_time']. "</td>
                                     </tr>
                                 ";
-                            }
+                            }   
                         } else {
                             echo "Database query error: " . $conn->error;
                         }
-                        
+
                       }
                     }else{
                       $sql = "SELECT positions.description, candidates.firstname AS canfirst, candidates.lastname AS canlast, voters.firstname AS votfirst, voters.lastname AS votlast, archive_votes.date_time FROM archive_votes LEFT JOIN positions ON positions.id = archive_votes.position_id LEFT JOIN candidates ON candidates.id = archive_votes.candidate_id LEFT JOIN voters ON voters.id = archive_votes.voters_id";
