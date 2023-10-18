@@ -1,3 +1,15 @@
+.li-vote .clist{
+  margin-left: 0;
+}
+
+#candidate_list ul li {
+    margin: 0 30px 30px 0;
+    vertical-align: top;
+    display: flex;
+    justify-content: flex-start;
+    gap: 2rem;
+}
+
 @media only screen and (max-width: 600px) {
   .main-header .navbar-custom-menu {
     float: unset;
@@ -73,7 +85,7 @@
     align-items: center;
     margin: 0 !important;
     display: flex !important;
-    justify-content: start !important;
+    justify-content: flex-start !important;
   }
 
   .pull-right {
@@ -103,7 +115,7 @@
   .li-vote input[type="radio"] {
     width: 25px;
     height: 25px;
-    margin-left: auto;
+/*    margin-left: auto;*/
   }
 
   .li-vote img {
@@ -143,5 +155,21 @@
 
   .clist {
     margin-left: 0px !important;
+  }
+
+  #preview_list {
+  }
+
+  #preview_list .list-group-item {
+  }
+
+  #preview_list .list-group-item ul {
+    padding-left: 10px;
+    margin-top: 5px;
+  }
+
+  #preview_list .list-group-item ul .list-group-item {
+    background: #880000;
+    color: white;
   }
 }
