@@ -2,82 +2,52 @@
 <?php include 'includes/header.php'; ?>
 <body class="hold-transition skin-blue layout-top-nav">
     <div class="wrapper">
-    	<?php include 'includes/navbar.php'; ?>
-            <div class="content-wrapper">
-                <div class="container">
-                    <section class="content">
-                        <h1 class="page-header text-center"><b id="title"></b></h1>
-                        <?php include './test.php' ?>
-                        <div class="box">
-                            <div class="box-header">
-                                <ul  class="nav nav-tabs">
-                                    <li class="active">
-                                        <a  href="#home" data-toggle="tab">Rankings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#vote" data-toggle="tab">Vote</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="box-body">
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="home">
-                                        <div id="positions_charts" style="width: 100%;"></div>
-                                    </div>
-                                    <div class="tab-pane" id="vote">
-                                        <div class="row">
-                                            <div class="col-sm-10 col-sm-offset-1" id="content">
-                                                <ul class="nav nav-tabs" id="position_tabs">
-                                                    <!-- <li class="active"><a href="#">Home</a></li>
-                                                    <li><a href="#">Menu 1</a></li>
-                                                    <li><a href="#">Menu 2</a></li>
-                                                    <li><a href="#">Menu 3</a></li> -->
-                                                </ul>
-                                                <div class="tab-content clearfix" id="tab_content">
-
-                                                </div>
+        <?php include 'includes/navbar.php'; ?>
+        <div class="content-wrapper">
+            <div class="container">
+                <section class="content">
+                    <h1 class="page-header text-center"><b id="title"></b></h1>
+                    <?php include './test.php' ?>
+                    <div class="box">
+                        <div class="box-header">
+                            <ul class="nav nav-tabs" style="display: none">
+                                <li>
+                                    <a href="#vote" data-toggle="tab">Vote</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="box-body">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="vote">
+                                    <div class="row">
+                                        <div class="col-sm-10 col-sm-offset-1" id="content">
+                                            <ul class="nav nav-tabs" id="position_tabs">
+                                                <!-- Content for vote tab -->
+                                            </ul>
+                                            <div class="tab-content clearfix" id="tab_content">
+                                                <!-- Content for vote tab -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </section>
-                </div>
+                    </div>
+                </section>
             </div>
-      	<?php include 'includes/ballot_modal.php'; ?>
+        </div>
+        <?php include 'includes/ballot_modal.php'; ?>
     </div>
     <div class="modal" id="preview">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-body">
                     <ul class="list-group" id="preview_list">
-                        
+                        <!-- Content for preview -->
                     </ul>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-sm btn-danger" id="finish_vote">Finish</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal" id="preview_platform" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <b>Platform</b>
-                            </div>
-                        </div>
-                        <div class="card-body" style="border:solid lightgray 1px;height:400px;padding:10px;border-radius:5px;margin-top: 20px" id="platform_banner">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-sm btn-danger">Finish</button>
                 </div>
             </div>
         </div>
@@ -131,7 +101,7 @@
                 
                 
 
-                res.votes.forEach(v => {
+                res.my_votes.forEach(v => {
                     v['position'] = obj.candidates.find(elem => elem.candidates_id == v.candidate_id);
                     obj.selectedCandidates.push(v);
                 });
@@ -287,15 +257,16 @@
                 boxFoot.className = 'box-footer';
                 boxFootPrev.className = i>0?'btn btn-primary btn-sm':'btn btn-primary btn-sm disabled';
                 boxFootPrev.disabled = i>0?'':'true';
-                boxFootPrev.innerText = 'Prev';
+                boxFootPrev.innerText = 'Previous';
+                boxFootPrev.style = 'width:100px; height: 50px';
                 console.log('Obj', obj);
-                boxFootNext.className = (i+1)<obj.positions.length?'btn btn-primary btn-sm':'btn btn-primary btn-sm disabled';
+                boxFootNext.className = (i+1)<obj.positions.length?'btn btn-primary btn-sm pull-right':'btn btn-primary btn-sm disabled';
                 boxFootNext.disabled = (i+1)<obj.positions.length?'':'true';
                 boxFootNext.innerText = 'Next';
-                boxFootSubmit.className = 'btn btn-success btn-sm';
+                boxFootSubmit.className = 'btn btn-success btn-sm pull-right';
                 boxFootSubmit.innerText = 'Submit'
-                boxFootNext.style = 'margin-left:5px';
-                boxFootSubmit.style = 'margin-left:5px';
+                boxFootNext.style = 'margin-left:5px; width: 100px; height: 50px';
+                boxFootSubmit.style = 'margin-left:5px; width: 100px; height: 50px';
                 boxTitleB.innerText = position.description;
                 boxFootPrev.onclick = function() {
                     let prevTab = xxx>0?candidates.positions[xxx-1]:null;
@@ -383,15 +354,15 @@
                     liInputType.value = candidate.max_vote > 1?'checkbox':'radio';
                     liInputClass.value = 'flat-red';
                     liImgWidth.value = '100px';
-                    liImgHeight.value = '100px'
-                    liImgClass.value = 'clist'
+                    liImgHeight.value = '100px';
+                    liImgClass.value = 'clist';
                     liInputClick.value = "selCandids("+candidate.candidates_id+", this)";
                     liImgSrc.value = candidate.photo?'images/'+candidate.photo:'images/profile.jpg';
                     liInputName.value = 'radio_name_'+position.id;
                     liInputId.value = 'radio_name_'+position.id;
-                    liButtonClass.value = 'btn btn-primary btn-sm btn-flat clist platform';
-                    liButton.innerText = 'Platform';
-                    liButtonClick.value = "viewPlatform("+candidate.candidates_id+")";
+                  //  liButtonClass.value = 'btn btn-primary btn-sm btn-flat clist platform';
+                  //  liButton.innerText = 'Platform';
+                  //  liButtonClick.value = "viewPlatform("+candidate.candidates_id+")";
 
                     liInput.setAttributeNode(liInputType);
                     liInput.setAttributeNode(liInputClass);
@@ -407,7 +378,7 @@
                     
                     console.log(liInput);
                     li.appendChild(liInput);
-                    li.appendChild(liButton);
+                  //  li.appendChild(liButton);
                     li.appendChild(liImg);
                     li.innerHTML = li.innerHTML + '<span class="cname clist">'+candidate.firstname+' '+candidate.lastname+'</span>';
                     

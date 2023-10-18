@@ -1,21 +1,21 @@
 <?php include 'includes/session.php'; ?>
 <?php include 'includes/header.php'; ?>
+
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
   <?php include 'includes/navbar.php'; ?>
   <?php include 'includes/menubar.php'; ?>
+  <br><br>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Voters List
-      </h1>
+      <h1><strong>Students Lists</strong></h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Voters</li>
+        <li class="active">Students</li>
       </ol>
     </section>
     <!-- Main content -->
@@ -45,42 +45,44 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
-            <div class="box-header with-border">
-              <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
-            </div>
-            <div class="box-body">
+          <div class="box-header with-border">
+            <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
+            <button class="btn btn-info btn-sm btn-flat" data-toggle="modal" data-target="#importCsvModal"><i class="fa fa-upload"></i> Import CSV</button>
+          </div>
+            <div class="box-body table-responsive">
               <table id="example1" class="table table-bordered">
                 <thead>
-                  <th>Lastname</th>
-                  <th>Firstname</th>
-                  <th>Photo</th>
-                  <th>Voters ID</th>
-                  <th>Tools</th>
+                  <th>Student ID</th>
+                  <th>Full Name</th>
+                  <th>Course</th>
+                  <th>Department</th>
+                  <th>Year/Section</th>
+                  <th>Date Modified</th>
+                  <th style="width: 100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">Tools</th>
                 </thead>
                 <tbody>
-                  <?php
-                    $sql = "SELECT * FROM voters";
-                    $query = $conn->query($sql);
-                    while($row = $query->fetch_assoc()){
-                      $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
-                      echo "
+                <?php
+                // Fetch data from voters table with department_id
+                $sql = "SELECT voters.*, departments.name AS department_name FROM voters LEFT JOIN departments ON voters.department_id = departments.department_id";
+                $query = $conn->query($sql);
+                while ($row = $query->fetch_assoc()) {
+                    echo "
                         <tr>
-                          <td>".$row['lastname']."</td>
-                          <td>".$row['firstname']."</td>
-                          <td>
-                            <img src='".$image."' width='30px' height='30px'>
-                            <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['id']."'><span class='fa fa-edit'></span></a>
-                          </td>
-                          <td>".$row['voters_id']."</td>
-                          <td>
-                            <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
-                            <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
-                          </td>
+                            <td style='height:30px'>" . $row['studentid'] . "</td>
+                            <td>" . $row['firstname'] . ' ' . $row['middlename'] . ' ' . $row['lastname'] . "</td>
+                            <td>" . $row['course'] . "</td>
+                            <td>" . $row['department_name'] . "</td>
+                            <td>" . $row['year'] . "</td>
+                            <td>" . $row['date'] . "</td>
+                            <td class='button'>
+                                <a class='btn-success btn-lg edit btn-flat' data-id='" . $row['id'] . "'><i class='fa fa-edit'></i></a>
+                                <a class='btn-danger btn-lg delete btn-flat' data-id='" . $row['id'] . "'><i class='fa fa-trash'></i></a>
+                            </td>
                         </tr>
-                      ";
-                    }
-                  ?>
-                </tbody>
+                    ";
+                }
+                ?>
+              </tbody>
               </table>
             </div>
           </div>
@@ -125,8 +127,12 @@ function getRow(id){
     dataType: 'json',
     success: function(response){
       $('.id').val(response.id);
+      $('#edit_studentid').val(response.studentid);
       $('#edit_firstname').val(response.firstname);
+      $('#edit_middlename').val(response.middlename);
       $('#edit_lastname').val(response.lastname);
+      $('#edit_course').val(response.course);
+      $('#edit_year').val(response.year);
       $('#edit_password').val(response.password);
       $('.fullname').html(response.firstname+' '+response.lastname);
     }

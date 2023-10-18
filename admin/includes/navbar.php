@@ -1,10 +1,26 @@
+<style>
+  /* Add this CSS to make the header fixed */
+  .main-header {
+    position: fixed;
+    width: 100%;
+    z-index: 1000; /* Adjust the z-index as needed */
+    /* You may also want to set a background color, box shadow, or other styles for the fixed header */
+  }
+
+  /* Add padding to the body to prevent content from being hidden under the fixed header */
+  body {
+    margin-bottom: 20px; /* Adjust the padding-top to match the height of your header */
+  }
+</style>
 <header class="main-header">
   <!-- Logo -->
   <a href="#" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini"><strong>EVSU</strong></span>
+    <span class="logo-mini">
+      <img src="includes/images/favicon.png" alt="logo" style="width: 50px; height: 50px;">
+  </span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><b>EVSU Voting System</b></span>
+    <span class="logo-lg"><img src="includes/images/logo1.png" alt="logo" style="width: 200px; height: 50px;"></span>
   </a>
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top">
@@ -33,10 +49,10 @@
             </li>
             <li class="user-footer">
               <div class="pull-left">
-                <a href="#profile" data-toggle="modal" class="btn btn-default btn-flat" id="admin_profile">Update</a>
+                <a href="#profile" data-toggle="modal" class="btn btn-primary btn-flat" id="admin_profile">Update</a>
               </div>
               <div class="pull-right">
-                <a href="logout.php" class="btn btn-default btn-flat">Sign out</a>
+                <a href="logout.php" class="btn btn-danger btn-flat">Sign out</a>
               </div>
             </li>
           </ul>

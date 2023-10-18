@@ -31,6 +31,19 @@
             </div>
         </div>
     </div>
+    <script>
+// Function to capitalize every word of a string
+function capitalizeEveryWord(string) {
+  return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+}
+
+// Attach event listeners to the input fields
+document.querySelectorAll('input').forEach(function(input) {
+  input.addEventListener('input', function() {
+    this.value = capitalizeEveryWord(this.value);
+  });
+});
+</script>
 </div>
 
 <!-- Edit -->

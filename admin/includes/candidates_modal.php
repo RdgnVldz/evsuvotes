@@ -43,6 +43,13 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="partylist" class="col-sm-3 control-label">Party</label>
+
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="partylist" name="partylist" required>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="position" class="col-sm-3 control-label">Position</label>
 
                     <div class="col-sm-9">
@@ -67,13 +74,13 @@
                       <input type="file" id="photo" name="photo">
                     </div>
                 </div>
-                <div class="form-group">
+               <!-- <div class="form-group">
                     <label for="platform" class="col-sm-3 control-label">Platform</label>
 
                     <div class="col-sm-9">
                       <textarea class="form-control" id="platform" name="platform" rows="7"></textarea>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
@@ -82,6 +89,19 @@
             </div>
         </div>
     </div>
+    <script>
+// Function to capitalize the first letter of a string
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+// Attach event listeners to the input fields
+document.querySelectorAll('input').forEach(function(input) { {
+    input.addEventListener('input', function() {
+      this.value = capitalizeFirstLetter(this.value);
+    });
+  }
+});
+</script>
 </div>
 
 <!-- Edit -->
@@ -111,6 +131,13 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="edit_partylist" class="col-sm-3 control-label">Party</label>
+
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="edit_partylist" name="partylist" required>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="edit_position" class="col-sm-3 control-label">Position</label>
 
                     <div class="col-sm-9">
@@ -128,13 +155,13 @@
                       </select>
                     </div>
                 </div>
-                <div class="form-group">
+               <!-- <div class="form-group">
                     <label for="edit_platform" class="col-sm-3 control-label">Platform</label>
 
                     <div class="col-sm-9">
                       <textarea class="form-control" id="edit_platform" name="platform" rows="7"></textarea>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
@@ -198,6 +225,30 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Import CSV Modal -->
+<div class="modal fade" id="importCsvModal" tabindex="-1" role="dialog" aria-labelledby="importCsvModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="importCsvModalLabel">Import CSV</h4>
+      </div>
+      <form action="process_csv_candidates.php" method="post" id="importCsvForm" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="csvFile">Choose CSV File:</label>
+            <input type="file" class="form-control" id="csvFile" name="csvFile" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Import</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
 

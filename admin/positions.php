@@ -5,13 +5,13 @@
 
   <?php include 'includes/navbar.php'; ?>
   <?php include 'includes/menubar.php'; ?>
-
+  <br><br>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Positions
+      <strong>Positions Lists</strong>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -48,13 +48,13 @@
             <div class="box-header with-border">
               <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
             </div>
-            <div class="box-body">
+            <div class="box-body table-responsive">
               <table id="example1" class="table table-bordered">
                 <thead>
                   <th class="hidden"></th>
                   <th>Description</th>
                   <th>Maximum Vote</th>
-                  <th>Tools</th>
+                  <th style="width: 100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">Tools</th>
                 </thead>
                 <tbody>
                   <?php
@@ -64,11 +64,11 @@
                       echo "
                         <tr>
                           <td class='hidden'></td>
-                          <td>".$row['description']."</td>
+                          <td style='height:30px'>".$row['description']."</td>
                           <td>".$row['max_vote']."</td>
-                          <td>
-                            <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
-                            <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
+                          <td style='text-align: center'>
+                            <a class='btn-success btn-lg edit btn-flat' data-id='" . $row['id'] . "'><i class='fa fa-edit'></i></a>
+                            <a class='btn-danger btn-lg delete btn-flat' data-id='" . $row['id'] . "'><i class='fa fa-trash'></i></a>
                           </td>
                         </tr>
                       ";

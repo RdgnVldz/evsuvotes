@@ -5,13 +5,13 @@
 
   <?php include 'includes/navbar.php'; ?>
   <?php include 'includes/menubar.php'; ?>
-
+  <br><br>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Candidates List
+      <strong>Candidates Lists</strong>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -44,20 +44,25 @@
       ?>
       <div class="row">
         <div class="col-xs-12">
+      <!--  <div>
+          <button class="btn btn-sm btn-flat" style="background-color: #0044cc; color: #fff;"><a href="candidates.php" style="text-decoration: none; color: #fff;">Candidates</a></button>
+          <button class="btn btn-info btn-sm btn-flat"><a href="department_candidates.php" style="color: #fff;">Department Candidates</a></button>
+        </div> -->
           <div class="box">
             <div class="box-header with-border">
               <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
+              <button class="btn btn-info btn-sm btn-flat" data-toggle="modal" data-target="#importCsvModal"><i class="fa fa-upload"></i> Import CSV</button>
             </div>
-            <div class="box-body">
+            <div class="box-body table-responsive">
               <table id="example1" class="table table-bordered">
                 <thead>
                   <th class="hidden"></th>
                   <th>Position</th>
                   <th>Photo</th>
-                  <th>Firstname</th>
-                  <th>Lastname</th>
-                  <th>Platform</th>
-                  <th>Tools</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Partylist</th>
+                  <th style="width: 100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">Tools</th>
                 </thead>
                 <tbody>
                   <?php
@@ -75,10 +80,10 @@
                           </td>
                           <td>".$row['firstname']."</td>
                           <td>".$row['lastname']."</td>
-                          <td><a href='#platform' data-toggle='modal' class='btn btn-info btn-sm btn-flat platform' data-id='".$row['canid']."'><i class='fa fa-search'></i> View</a></td>
-                          <td>
-                            <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['canid']."'><i class='fa fa-edit'></i> Edit</button>
-                            <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['canid']."'><i class='fa fa-trash'></i> Delete</button>
+                          <td>".$row['partylist']."</td>
+                          <td style='text-align: center'>
+                            <a class='btn-success btn-lg edit btn-flat' data-id='" . $row['canid'] . "'><i class='fa fa-edit'></i></a>
+                            <a class='btn-danger btn-lg delete btn-flat' data-id='" . $row['canid'] . "'><i class='fa fa-trash'></i></a>
                           </td>
                         </tr>
                       ";
@@ -119,12 +124,6 @@ $(function(){
     getRow(id);
   });
 
-  $(document).on('click', '.platform', function(e){
-    e.preventDefault();
-    var id = $(this).data('id');
-    getRow(id);
-  });
-
 });
 
 function getRow(id){
@@ -137,8 +136,8 @@ function getRow(id){
       $('.id').val(response.canid);
       $('#edit_firstname').val(response.firstname);
       $('#edit_lastname').val(response.lastname);
+      $('#edit_partylist').val(response.partylist);
       $('#posselect').val(response.position_id).html(response.description);      
-      $('#edit_platform').val(response.platform);
       $('.fullname').html(response.firstname+' '+response.lastname);
       $('#desc').html(response.platform);
     }

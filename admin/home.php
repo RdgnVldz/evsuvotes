@@ -6,15 +6,15 @@
 
   <?php include 'includes/navbar.php'; ?>
   <?php include 'includes/menubar.php'; ?>
-
+<br><br>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Dashboard
+        <strong>Dashboard</strong>
       </h1>
-      <ol class="breadcrumb">
+      <ol class="breadcrumb" >
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Dashboard</li>
       </ol>
@@ -174,24 +174,28 @@
 
 <?php include 'includes/scripts.php'; ?>
 <?php
-  $sql = "SELECT * FROM positions ORDER BY priority ASC";
-  $query = $conn->query($sql);
-  while($row = $query->fetch_assoc()){
-    $sql = "SELECT * FROM candidates WHERE position_id = '".$row['id']."'";
-    $cquery = $conn->query($sql);
-    $carray = array();
-    $varray = array();
-    while($crow = $cquery->fetch_assoc()){
-      array_push($carray, $crow['lastname']);
-      $sql = "SELECT * FROM votes WHERE candidate_id = '".$crow['id']."'";
-      $vquery = $conn->query($sql);
-      array_push($varray, $vquery->num_rows);
-    }
-    $carray = json_encode($carray);
-    $varray = json_encode($varray);
-    ?>
-    <script>
-    $(function(){
+$sql = "SELECT * FROM positions ORDER BY priority ASC";
+$query = $conn->query($sql);
+while ($row = $query->fetch_assoc()) {
+  $sql = "SELECT * FROM candidates WHERE position_id = '" . $row['id'] . "'";
+  $cquery = $conn->query($sql);
+  $carray = array();
+  $varray = array();
+  while ($crow = $cquery->fetch_assoc()) {
+    array_push($carray, $crow['lastname']);
+    $sql = "SELECT * FROM votes WHERE candidate_id = '" . $crow['id'] . "'";
+    $vquery = $conn->query($sql);
+    array_push($varray, $vquery->num_rows);
+  }
+
+  // Sort the data arrays in descending order based on votes
+  array_multisort($varray, SORT_ASC, $carray);
+
+  $carray = json_encode($carray);
+  $varray = json_encode($varray);
+  ?>
+  <script>
+    $(function () {
       var rowid = '<?php echo $row['id']; ?>';
       var description = '<?php echo slugify($row['description']); ?>';
       var barChartCanvas = $('#'+description).get(0).getContext('2d')
@@ -243,9 +247,9 @@
       var myChart = barChart.HorizontalBar(barChartData, barChartOptions)
       //document.getElementById('legend_'+rowid).innerHTML = myChart.generateLegend();
     });
-    </script>
-    <?php
-  }
+  </script>
+  <?php
+}
 ?>
 </body>
 </html>
